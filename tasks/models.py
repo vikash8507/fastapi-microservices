@@ -15,6 +15,14 @@ class User(Base):
     is_active = Column(Boolean, default=True)
 
     tasks = relationship("Task", back_populates="owner")
+    token = relationship("Task", uselist=False)
+
+class Token(Base):
+    __tablename__ = "tokens"
+
+    id = Column(Integer, primary_key=True)
+    token = Column(String, unique=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
 
 
 class Task(Base):
