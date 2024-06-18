@@ -20,15 +20,3 @@ def signeup(user: schemas.UserCreate, db: Session = Depends(get_db)):
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     return utils.create_user(db=db, user=user)
-
-@app.post("/signin/", response_model=schemas.TokenSchema)
-def signin(user: schemas.UserLoginSchema, db: Session = Depends(get_db)):
-    db_user = utils.get_user_by_email(db, email=user.email)
-    if not db_user:
-        raise HTTPException(status_code=400, detail="User not found")
-    if db_user.hashed_password != user.password + "notreallyhashed":
-        raise HTTPException(status_code=400, detail="Wrong credentials")
-    db_token = utils.get_user_token_by_user_id(db, db_user.id)
-    if db_token:
-        return db_token
-    return utils.create_token(db, db_user.id)

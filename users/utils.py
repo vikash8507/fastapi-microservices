@@ -14,13 +14,3 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
-
-def get_user_token_by_user_id(db: Session, user_id: int):
-    return db.query(models.Token).filter(models.Token.user_id == user_id).first()
-
-def create_token(db: Session, user_id: int):
-    db_token = models.Token(user_id=user_id, token=str(uuid.uuid4()))
-    db.add(db_token)
-    db.commit()
-    db.refresh(db_token)
-    return db_token
