@@ -26,3 +26,7 @@ class TokenSchema(BaseModel):
 
     class Config:
         orm_mode = True
+
+class CreateTokenSchema(BaseModel):
+    email: str
+    password: str

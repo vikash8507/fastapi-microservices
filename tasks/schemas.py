@@ -20,3 +20,10 @@ class UserDetail(UserBase):
 class TaskBase(BaseModel):
     title: str
     description: str
+
+
+class TaskDetail(TaskBase):
+    id: int
+
+    class Config:
+        orm_mode = True

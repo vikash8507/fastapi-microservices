@@ -46,5 +46,3 @@ services:
       - ./.env
     volumes:
       - ./auth:/app
-    ports:
-      - 8003:8080
