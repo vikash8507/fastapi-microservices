@@ -4,12 +4,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 
-POSTGRESQL_USER = os.environ.get("POSTGRESQL_USER")
-POSTGRESQL_PASSWORD = os.environ.get("POSTGRESQL_PASSWORD")
-POSTGRESQL_DB = os.environ.get("POSTGRESQL_DB")
-POSTGRESQL_HOST = os.environ.get("POSTGRESQL_HOST")
-POSTGRESQL_PORT = int(os.environ.get("POSTGRESQL_PORT"))
-SQLALCHEMY_DATABASE_URL = f"postgresql://{POSTGRESQL_USER}:{POSTGRESQL_PASSWORD}@{POSTGRESQL_HOST}:{POSTGRESQL_PORT}/{POSTGRESQL_DB}"
+POSTGRES_USER = os.environ.get("POSTGRES_USER")
+POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")
+POSTGRES_DB = os.environ.get("POSTGRES_DB")
+POSTGRES_HOST = os.environ.get("POSTGRES_SERVICE_SERVICE_HOST")
+POSTGRES_PORT = int(os.environ.get("POSTGRES_PORT"))
+SQLALCHEMY_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL

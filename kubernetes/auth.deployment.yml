@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: auth-deployment
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth-api
+  template:
+    metadata:
+      labels:
+        app: auth-api
+    spec:
+      containers:
+        - name: auth
+          image: vikash8507/auth-microservice
+          env:
+            - name: POSTGRES_HOST
+              value: 'postgres-service.default'
+            - name: POSTGRES_PORT
+              value: '5432'
+          envFrom:
+            - configMapRef:
+                name: postgres-secret

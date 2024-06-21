@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: tasks-deployment
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tasks-api
+  template:
+    metadata:
+      labels:
+        app: tasks-api
+    spec:
+      containers:
+        - name: tasks
+          image: vikash8507/tasks-microservice
+          env:
+            - name: AUTH_URL
+              value: 'auth-service.default'
+            - name: POSTGRES_HOST
+              value: 'postgres-service.default'
+            - name: POSTGRES_PORT
+              value: '5432'
+          envFrom:
+            - configMapRef:
+                name: postgres-secret
