@@ -8,7 +8,7 @@ metadata:
 spec:
   selector:
     app: auth-api
-  tyee: ClusterIP
+  type: ClusterIP
   ports:
     - protocol: "TCP"
       port: 80
@@ -24,10 +24,26 @@ metadata:
   name: auth-deployment
 
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: auth-api
-  containers:
-    - name: auth-api
-      image: ''
-
+  template:
+    metadata:
+      labels:
+        app: auth-api
+    spec:
+      containers:
+        - name: auth
+          image: vikash8507/auth-microservice
+          env:
+            - name: POSTGRESQL_USER
+              value: admin
+            - name: POSTGRESQL_PASSWORD
+              value: password
+            - name: POSTGRESQL_DB
+              value: fastapi
+            - name: POSTGRESQL_HOST
+              value: '10.105.39.10'
+            - name: POSTGRESQL_PORT
+              value: '5432'

@@ -23,7 +23,7 @@ services:
     volumes:
       - ./tasks:/app
     ports:
-      - 8001:8080
+      - 8001:8001
     
   users:
     build: ./users
@@ -34,7 +34,7 @@ services:
     volumes:
       - ./users:/app
     ports:
-      - 8002:8080
+      - 8002:8002
 
   auth:
     build: ./auth
