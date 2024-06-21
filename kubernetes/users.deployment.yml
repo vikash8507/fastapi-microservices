@@ -21,8 +21,6 @@ spec:
           env:
             - name: AUTH_URL
               value: 'auth-service.default'
-            - name: POSTGRES_HOST
-              value: 'postgres-service.default'
             - name: POSTGRES_PORT
               value: '5432'
           envFrom:

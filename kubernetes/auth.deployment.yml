@@ -19,8 +19,6 @@ spec:
         - name: auth
           image: vikash8507/auth-microservice
           env:
-            - name: POSTGRES_HOST
-              value: 'postgres-service.default'
             - name: POSTGRES_PORT
               value: '5432'
           envFrom:
