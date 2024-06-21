@@ -1,11 +1,14 @@
+import os
 import requests
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
 import  schemas, utils
-from db import SessionLocal, engine
+from db import SessionLocal
 
 app = FastAPI()
+
+AUTH_URL = os.environ.get("AUTH_URL")
 
 
 def get_db():
@@ -24,7 +27,7 @@ def signeup(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 @app.post("/get-token/", response_model=schemas.TokenSchema)
 def get_token(token: schemas.CreateTokenSchema):
-    response = requests.post("http://auth:8000/get-token/", json={
+    response = requests.post(f"http://{AUTH_URL}/get-token/", json={
         "email": token.email,
         "password": token.password,
     })

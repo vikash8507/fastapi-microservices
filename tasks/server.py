@@ -1,3 +1,4 @@
+import os
 import requests
 
 from fastapi import Depends, FastAPI, Request, HTTPException
@@ -10,6 +11,8 @@ from db import SessionLocal, engine
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+AUTH_URL = os.environ.get("AUTH_URL")
 
 
 def get_db():
@@ -26,7 +29,7 @@ class JWTBearer(HTTPBearer):
     async def __call__(self, request: Request, db: Session = Depends(get_db)):
         credentials: HTTPAuthorizationCredentials = await super(JWTBearer, self).__call__(request)
         if credentials:
-            if not credentials.scheme == "Bearer":
+            if credentials.scheme != "Bearer":
                 raise HTTPException(status_code=403, detail="Invalid authentication scheme.")
             user_id = self.verify_jwt(credentials.credentials)
             if user_id:
@@ -36,7 +39,7 @@ class JWTBearer(HTTPBearer):
             raise HTTPException(status_code=403, detail="Invalid authorization code.")
 
     def verify_jwt(self, token: str) -> bool:
-        response = requests.post("http://auth:8000/validate-token/", json={"token": token})
+        response = requests.post(f"http://{AUTH_URL}/validate-token/", json={"token": token})
         if response.status_code == 200:
             res = response.json()
             return res.get("user_id")
