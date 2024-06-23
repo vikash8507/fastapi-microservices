@@ -39,7 +39,7 @@ class JWTBearer(HTTPBearer):
             raise HTTPException(status_code=403, detail="Invalid authorization code.")
 
     def verify_jwt(self, token: str) -> bool:
-        response = requests.post(f"http://{AUTH_URL}/validate-token/", json={"token": token})
+        response = requests.post(f"{AUTH_URL}/validate-token/", json={"token": token})
         if response.status_code == 200:
             res = response.json()
             return res.get("user_id")

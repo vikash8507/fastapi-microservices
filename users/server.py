@@ -27,7 +27,7 @@ def signeup(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 @app.post("/get-token/", response_model=schemas.TokenSchema)
 def get_token(token: schemas.CreateTokenSchema):
-    response = requests.post(f"http://{AUTH_URL}/get-token/", json={
+    response = requests.post(f"{AUTH_URL}/get-token/", json={
         "email": token.email,
         "password": token.password,
     })
