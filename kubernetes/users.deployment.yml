@@ -20,7 +20,7 @@ spec:
           image: vikash8507/users-microservice
           env:
             - name: AUTH_URL
-              value: 'auth-service.default'
+              value: '/api/auth'
             - name: POSTGRES_PORT
               value: '5432'
           envFrom:
